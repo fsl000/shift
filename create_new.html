@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .hide
+        {
+            display: none;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".w_days").hide();
+            $(".w_days_d").hide();
+            $(".w_dates").hide();
+            $(".days_name").hide();
+            $(".nshifts_s").hide();
+            $(".nshifts_d").hide();
+            $(".on_off_d").hide();
+            $(".hours_s").hide();
+            $(".times_s").hide();
+            $(".time_d").hide();
+            $(".btn").hide();
+
+
+
+
+        });
+
+        function showstatic() {
+            $(".static").show();
+            $(".w_days").show();
+            $(".dynamic").hide();
+            $(".btn").hide();
+        }
+
+
+
+        function show_name() {
+            $(".days_name").show();
+            $(".on_off_d").hide();
+            $(".nshifts_s").hide();
+            $(".date_s").hide();
+            $(".hours_s").hide();
+            $(".added").hide();
+        }
+
+        function show_number() {
+            $(".on_off_d").show();
+            $(".days_name").hide();
+            $(".nshifts_s").hide();
+            $(".date_s").hide();
+            $(".hours_s").hide();
+            $(".added").hide();
+        }
+
+        
+
+        function show_nshifs() {
+            $(".nshifts_s").show();
+        }
+
+        function showbtn() {
+            $(".btn").show()
+        }
+
+        function shownshifts_d(){
+            $(".nshifts_d").show();
+        }
+
+        function showdate() {
+            $(".added").remove();
+            var nshifts = $("#nshifts_d").val();
+
+
+            for (i = 0; i < nshifts; i++) {
+                var date1 = $(".times_s").clone();
+                date1.addClass("added");
+                date1.attr('id',i);
+                date1.removeClass("times_s");
+                $(".times_s").after(date1);
+                $(".added").show();
+            }
+        }
+
+
+
+
+
+        //////////////////////////////////
+
+        function showdynamic() {
+            $(".w_days_d").show()
+            $(".dynamic").show();
+            $(".static").hide();
+            $(".btn").hide();
+
+        }
+
+
+        function showdate_d() {
+            $(".added").remove();
+            var nshifts = $("#nshifts").val();
+
+            for (i = 0; i < nshifts; i++) {
+                var date2 = $(".time_d").clone();
+                date2.addClass("added");
+                date2.removeClass("time_d");
+                $(".time_d").after(date2);
+                $(".added").show();
+            }
+        }
+
+        /////////////////////////////////
+
+        function submit(){
+             if( !$("#master_shift_name").val() ){
+                 $("#req_main_shift").removeClass('hide')
+                 return false
+             }
+             if( $("#nshifts_d").val() == 0 ){
+                 $("#req_nshifts_d").removeClass('hide')
+                 return false
+             }
+            
+             alert($('.shift_name').val())
+        }
+
+
+    </script>
+    <h1>Create New Shift</h1>
+</head>
+
+<body>
+    <div>
+        <input type="text" name="master_shift_name" id="master_shift_name" placeholder="main shift name">
+        <label id="req_main_shift" class="req_main_shift hide" style="color:red">Required</label>
+    </div>
+    <br>
+    <div class="shift_type">
+        <label for="Static">Static</label>
+        <input type="radio" name="shift_type" id="shift_type" checked="false" value="Static" onclick="showstatic();">
+        <label for="Dynamic">Dynamic</label>
+        <input type="radio" name="shift_type" id="shift_type" value="Dynamic" onclick="showdynamic();">
+    </div>
+    <div class="static">
+        <div class="w_days">
+            <h2>Choose Working Days</h2>
+            <label for="w_days">choose by days</label>
+            <input type="radio" onclick="show_name();">
+            <label for="w_days">choose by number</label>
+            <input type="radio" onclick="show_number();">
+        </div>
+
+        <div class="days_name">
+            <h4>Select Working Days</h4>
+            <table>
+                <tr>
+                    <td><input type="checkbox" name="w_day" onclick="show_nshifs()">Sun</td>
+                    <td><input type="checkbox" name="w_day" onclick="show_nshifs()">Mon</td>
+                    <td><input type="checkbox" name="w_day" onclick="show_nshifs()">Tue</td>
+                    <td><input type="checkbox" name="w_day" onclick="show_nshifs()">Wed</td>
+                    <td><input type="checkbox" name="w_day" onclick="show_nshifs()">Thu</td>
+                    <td><input type="checkbox" name="w_day" onclick="show_nshifs()">Fri</td>
+                    <td><input type="checkbox" name="w_day" onclick="show_nshifs()">Sat</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="on_off_d">
+            <h4>select # of working days and off days</h4>
+            <label for="w_days"># of working days</label>
+            <select name="w_days" id="w_days">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <label for="off_days"># of off days</label>
+            <select name="off_days" id="off_days" onchange="show_nshifs();">
+                <option value="0" selected>0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+        </div>
+
+        <div class="nshifts_s">
+            <h4>Choose number of shifts</h4>
+            <label for="nshifts"># of shifts</label>
+            <select name="nshifts" id="nshifts_d" onchange="showdate();">
+                <option value="0" selected>0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <label id="req_nshifts_d" class="req_nshifts_d hide" style="color:red">Required</label>
+        </div>
+
+        <div class="times_s" style="border: ridge black; width: 25%;">
+            <br>
+            <label for="shift_name">shift name:</label>
+            <input type="text" class="shift_name" name="shift_name" placeholder="shift name">
+            <label id="req_shift_name" class="req_shift_name hide" style="color:red">Required</label>
+            <h4>choose working hours</h4>
+            <label for="from">from</label>
+            <input type="time" id="from" name="from">
+            <label for="to">to</label>
+            <input type="time" id="to" name="to" onclick="showbtn();">
+            <br>
+        </div>
+        <button class="btn" onclick="submit();">submit</button>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="dynamic">
+        <div class="w_days_d">
+            <h4>Choose working days</h4>
+            <label for="w_days">select number of working days</label>
+            <select name="w_days" id="w_days">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <label for="off_days">select number of off days</label>
+            <select name="off_days" id="off_days">
+                <option value="0" selected>0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <label for="cycles">select cycles days</label>
+            <select name="cycles" id="cycles" onchange="shownshifts_d();">
+                <option value="0" selected>0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+        </div>
+
+        <div class="nshifts_d">
+            <h4>Choose number of shifts</h4>
+            <label for="nshifts"># of shifts</label>
+            <select name="nshifts" id="nshifts" onchange="showdate_d();">
+                <option value="0" selected>0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+        </div>
+
+
+
+        <div class="time_d" style="border: ridge black;">
+            <br>
+            <label for="shift_name">shift name:</label>
+            <input type="text" name="shift_name">
+            <h4>choose working hours</h4>
+            <label for="from">from</label>
+            <input type="time" id="from" name="from">
+            <label for="to">to</label>
+            <input type="time" id="to" name="to"onclick="showbtn();" >
+            <br>
+            <br>
+        </div>
+        <button class="btn">submit</button>
+    </div>
+</body>
+
+</html>
